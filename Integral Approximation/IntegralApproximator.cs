@@ -15,6 +15,8 @@ namespace Integral_Approximation
         MTParserClass parser;
         MTDoubleVectorClass batchVar;
         MTDoubleClass singleVar;
+        Control lastActiveInputBox;
+        Timer timer;
 
         public IntegralApproximator()
         {
@@ -33,11 +35,22 @@ namespace Integral_Approximation
             singleVar.create("x", 0);
             batchVar = new MTDoubleVectorClass();
             batchVar.create("x");
+
+            timer = new Timer();
+            timer.Interval = 100;
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Start();
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            UpdateLastActiveInputBox();
         }
 
         private void IntegralApproximator_Load(object sender, EventArgs e)
         {
             this.AcceptButton = this.button1;
+            this.lastActiveInputBox = textBox1;
 
             textBox1.Text = function;
             textBox2.Text = start.ToString();
@@ -45,12 +58,12 @@ namespace Integral_Approximation
             //by changing the text, the index changes, causing the index to be reset
             //and the surrounding numbers to be generated
             domainUpDown1.Text = intervals.ToString();
-            
+
             InitializeGraph();
             zg1.ZoomEvent += new ZedGraphControl.ZoomEventHandler(zg1_ZoomEvent);
 
             //by setting the index, UpdateGraph() is called
-            comboBox1.SelectedIndex = 0;            
+            comboBox1.SelectedIndex = 0;
         }
 
         private void InitializeGraph()
@@ -507,7 +520,7 @@ namespace Integral_Approximation
 
         private void InsertKey_Click(object sender, EventArgs e)
         {
-            Control control = textBox1;
+            Control control = lastActiveInputBox;
 
             if ((control is TextBox && !(control as TextBox).ReadOnly) || control is DomainUpDown)
             {
@@ -656,6 +669,13 @@ namespace Integral_Approximation
                 if (control is TextBox) (control as TextBox).Select(control.Text.Length, 0);
                 if (control is DomainUpDown) (control as DomainUpDown).Select(control.Text.Length, 0);
             }
+        }
+
+        private void UpdateLastActiveInputBox()
+        {
+            Control c = ActiveControl;
+            if ((c is TextBox && !(c as TextBox).ReadOnly) || c is DomainUpDown)
+                lastActiveInputBox = c;
         }
     }
 }
