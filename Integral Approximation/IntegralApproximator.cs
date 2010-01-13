@@ -38,13 +38,13 @@ namespace Integral_Approximation
 
             timer = new Timer();
             timer.Interval = 100;
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += (object sender, EventArgs e) =>
+                {
+                    Control c = ActiveControl;
+                    if ((c is TextBox && !(c as TextBox).ReadOnly) || c is DomainUpDown)
+                        lastActiveInputBox = c;
+                };
             timer.Start();
-        }
-
-        void timer_Tick(object sender, EventArgs e)
-        {
-            UpdateLastActiveInputBox();
         }
 
         private void IntegralApproximator_Load(object sender, EventArgs e)
@@ -669,13 +669,6 @@ namespace Integral_Approximation
                 if (control is TextBox) (control as TextBox).Select(control.Text.Length, 0);
                 if (control is DomainUpDown) (control as DomainUpDown).Select(control.Text.Length, 0);
             }
-        }
-
-        private void UpdateLastActiveInputBox()
-        {
-            Control c = ActiveControl;
-            if ((c is TextBox && !(c as TextBox).ReadOnly) || c is DomainUpDown)
-                lastActiveInputBox = c;
         }
     }
 }
