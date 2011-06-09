@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ZedGraph;
-using MTPARSERCOMLib;
 
 namespace Integral_Approximation
 {
@@ -12,9 +11,7 @@ namespace Integral_Approximation
         double start, end;
         int intervals;
         string function;
-        MTParserClass parser;
-        MTDoubleVectorClass batchVar;
-        MTDoubleClass singleVar;
+        Parser parser;
         Control lastActiveInputBox;
         Timer timer;
 
@@ -27,14 +24,7 @@ namespace Integral_Approximation
             intervals = 4;
             function = "(x-2)^2+2";
 
-            parser = new MTParserClass();
-            parser.defineConst("pi", Math.PI);
-            parser.defineConst("π", Math.PI);
-            parser.defineConst("e", Math.E);
-            singleVar = new MTDoubleClass();
-            singleVar.create("x", 0);
-            batchVar = new MTDoubleVectorClass();
-            batchVar.create("x");
+            parser = new Parser();
 
             timer = new Timer();
             timer.Interval = 100;
@@ -274,25 +264,12 @@ namespace Integral_Approximation
 
         private double[] Function(double[] x)
         {
-            double[] y = new double[x.Length];
-            parser.undefineAllVars();
-            parser.defineVar(batchVar as IMTVariable);
-            parser.compile(function);
-            batchVar.setValueVector(x);
-            parser.evaluateCompiledBatch(x.Length, y);
-            return y;
+            return parser.Evaluate(function, x);
         }
 
         private double Function(double x)
         {
-            parser.undefineAllVars();
-            parser.defineVar(singleVar as IMTVariable);
-            parser.compile(function);
-            singleVar.setValue(x);
-            return parser.evaluateCompiled();
-
-            //double[] xArray = { x };
-            //return Function(xArray)[0];            
+            return parser.Evaluate(function, x);
         }
 
         private double InterpolatedQuadraticFunction(double x, double a, double b)
@@ -394,23 +371,13 @@ namespace Integral_Approximation
 
         private void UpdateParameters()
         {
-            try
+            if (parser.IsValidExpression(textBox2.Text) && parser.IsValidExpression(textBox3.Text) &&
+                parser.Evaluate(textBox2.Text) < parser.Evaluate(textBox3.Text))
             {
-                parser.undefineAllVars();
-                if (parser.evaluate(textBox2.Text) >= parser.evaluate(textBox3.Text))
-                {
-                    MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    start = parser.evaluate(textBox2.Text);
-                    end = parser.evaluate(textBox3.Text);
-                }
+                start = parser.Evaluate(textBox2.Text);
+                end = parser.Evaluate(textBox3.Text);
             }
-            catch
-            {
-                MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            else MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             int parsed;
             if (!Int32.TryParse(domainUpDown1.Text, out parsed))
@@ -423,18 +390,9 @@ namespace Integral_Approximation
                 else intervals = parsed;
             }
 
-            try
-            {
-                parser.undefineAllVars();
-                parser.defineVar(batchVar as IMTVariable);
-                parser.compile(textBox1.Text);
-                if (textBox1.Text != "") function = textBox1.Text;
-                else MessageBox.Show("Invalid equation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                MessageBox.Show("Invalid equation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            if (textBox1.Text != "" && parser.IsValidFunction(textBox1.Text))
+                function = textBox1.Text;
+            else MessageBox.Show("Invalid equation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             UpdateGraph();
             UpdateApproximation();

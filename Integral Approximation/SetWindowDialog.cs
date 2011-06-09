@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-using MTPARSERCOMLib;
 
 namespace Integral_Approximation
 {
     public partial class SetWindowDialog : Form
     {
-        MTParserClass parser;
+        Parser parser;
 
         public SetWindowDialog(double xMin, double xMax, double xScale, 
-            double yMin, double yMax, double yScale, bool axesOn, bool gridOn, MTParserClass parser)
+            double yMin, double yMax, double yScale, bool axesOn, bool gridOn, Parser parser)
         {
             InitializeComponent();
 
@@ -33,33 +32,34 @@ namespace Integral_Approximation
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            if (parser.IsValidExpression(textBox1.Text) && parser.IsValidExpression(textBox2.Text) &&
+                parser.IsValidExpression(textBox3.Text) && parser.IsValidExpression(textBox4.Text) &&
+                parser.IsValidExpression(textBox5.Text) && parser.IsValidExpression(textBox6.Text))
             {
-                parser.undefineAllVars();
-                if (parser.evaluate(textBox1.Text) >= parser.evaluate(textBox2.Text) ||
-                    parser.evaluate(textBox4.Text) >= parser.evaluate(textBox5.Text) ||
-                    parser.evaluate(textBox3.Text) <= 0 || parser.evaluate(textBox6.Text) <= 0)
-                {
+                double xMin   = parser.Evaluate(textBox1.Text);
+                double xMax   = parser.Evaluate(textBox2.Text);
+                double xScale = parser.Evaluate(textBox3.Text);
+                double yMin   = parser.Evaluate(textBox4.Text);
+                double yMax   = parser.Evaluate(textBox5.Text);
+                double yScale = parser.Evaluate(textBox6.Text);
+
+                if (xMin >= xMax || yMin >= yMax || xScale <= 0 || yScale <= 0)
                     MessageBox.Show("Invalid values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
                 else
                 {
                     (Owner as IntegralApproximator).SetWindow(
-                        parser.evaluate(textBox1.Text),
-                        parser.evaluate(textBox2.Text),
-                        parser.evaluate(textBox3.Text),
-                        parser.evaluate(textBox4.Text),
-                        parser.evaluate(textBox5.Text),
-                        parser.evaluate(textBox6.Text),
+                        xMin,
+                        xMax,
+                        xScale,
+                        yMin,
+                        yMax,
+                        yScale,
                         checkBox1.Checked,
                         checkBox2.Checked);
                     Close();
                 }
             }
-            catch
-            {
-                MessageBox.Show("Invalid values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            else MessageBox.Show("Invalid values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void button2_Click(object sender, EventArgs e)

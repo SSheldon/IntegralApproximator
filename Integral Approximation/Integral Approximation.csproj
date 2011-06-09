@@ -91,6 +91,7 @@
     <Compile Include="IntegralApproximator.Designer.cs">
       <DependentUpon>IntegralApproximator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="IntegralApproximator.resx">
