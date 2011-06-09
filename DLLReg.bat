@@ -1,1 +1,1 @@
-regsvr32 "%CD%\MTParserCOM.dll"
+regsvr32 "%~dp0MTParserCOM.dll"
