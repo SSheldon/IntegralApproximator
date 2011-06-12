@@ -8,9 +8,9 @@ namespace IntegralApproximation
 {
     public partial class IntegralApproximator : Form
     {
-        double start, end;
-        int intervals;
-        string function;
+        double start = 0, end = 4;
+        int intervals = 4;
+        string function = "(x-2)^2+2";
         Parser parser;
         Control lastActiveInputBox;
         Timer timer;
@@ -18,13 +18,26 @@ namespace IntegralApproximation
         public IntegralApproximator()
         {
             InitializeComponent();
+        }
 
-            start = 0;
-            end = 4;
-            intervals = 4;
-            function = "(x-2)^2+2";
+        private void IntegralApproximator_Load(object sender, EventArgs e)
+        {
+            Initialize();
+        }
 
-            parser = new Parser();
+        private void Initialize()
+        {
+            try
+            {
+                parser = new Parser();
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                MessageBox.Show("Could not load MTParser, likely because it has not been registered.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
 
             timer = new Timer();
             timer.Interval = 100;
@@ -35,10 +48,7 @@ namespace IntegralApproximation
                         lastActiveInputBox = c;
                 };
             timer.Start();
-        }
 
-        private void IntegralApproximator_Load(object sender, EventArgs e)
-        {
             this.AcceptButton = this.button1;
             this.lastActiveInputBox = textBox1;
 
