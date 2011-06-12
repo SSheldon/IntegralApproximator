@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using MTPARSERCOMLib;
 
 namespace IntegralApproximation
@@ -57,7 +58,7 @@ namespace IntegralApproximation
                 parser.evaluate(expression);
                 return true;
             }
-            catch
+            catch (COMException)
             {
                 return false;
             }
@@ -72,7 +73,7 @@ namespace IntegralApproximation
                 parser.undefineAllVars();
                 return true;
             }
-            catch
+            catch (COMException)
             {
                 parser.undefineAllVars();
                 return false;
