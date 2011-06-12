@@ -45,14 +45,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BCAEAA43E16A4757AB2019A5572D9880"
+        "MsmKey" = "8:_C41EE4DAC22F40A48DBF1A15197155C8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C41EE4DAC22F40A48DBF1A15197155C8"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_E07D55D6F1698400C621AF1ABDE79C5E"
+        "OwnerKey" = "8:_37AD9BB45D634FCC9F4B424851591504"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -280,9 +280,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BCAEAA43E16A4757AB2019A5572D9880"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E07D55D6F1698400C621AF1ABDE79C5E"
             {
-            "SourcePath" = "8:..\\MTParserCOM.dll"
+            "SourcePath" = "8:MTParserCOM.dll"
             "TargetName" = "8:MTParserCOM.dll"
             "Tag" = "8:"
             "Folder" = "8:_EE6C4B27A4894F728567D61F8302D29F"
@@ -297,7 +297,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:4"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -357,7 +357,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Integral Approximator"
         "ProductCode" = "8:{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}"
-        "PackageCode" = "8:{FE580FF4-B85C-4F42-A144-8906169D948E}"
+        "PackageCode" = "8:{C53AD079-896F-42BF-84DB-D813A5CE1F6D}"
         "UpgradeCode" = "8:{E1B5C4A9-F24B-4BB9-B5AF-829874CDDD66}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
