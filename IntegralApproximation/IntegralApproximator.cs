@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace Integral_Approximation
+namespace IntegralApproximation
 {
     public partial class IntegralApproximator : Form
     {

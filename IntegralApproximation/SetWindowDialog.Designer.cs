@@ -1,4 +1,4 @@
-﻿namespace Integral_Approximation
+﻿namespace IntegralApproximation
 {
     partial class SetWindowDialog
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Integral_Approximation
+namespace IntegralApproximation
 {
     public partial class SetWindowDialog : Form
     {

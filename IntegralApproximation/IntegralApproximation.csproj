@@ -8,7 +8,7 @@
     <ProjectGuid>{AE2997B8-E329-4D38-B7CA-4814125737F4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Integral_Approximation</RootNamespace>
+    <RootNamespace>IntegralApproximation</RootNamespace>
     <AssemblyName>IntegralApproximator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,4 +1,4 @@
-﻿namespace Integral_Approximation.Properties {
+﻿namespace IntegralApproximation.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

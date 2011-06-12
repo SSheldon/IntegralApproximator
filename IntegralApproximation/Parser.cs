@@ -1,7 +1,7 @@
 ﻿using System;
 using MTPARSERCOMLib;
 
-namespace Integral_Approximation
+namespace IntegralApproximation
 {
     public class Parser
     {
