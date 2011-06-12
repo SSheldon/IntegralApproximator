@@ -1,10 +1,11 @@
-Before installing this program, run "DLLReg.bat" as an administrator. This will register the MTParserCOM DLL so that the program can run it.
+Before this project will build, the MTParserCOM DLL must be registered; this is done by running "DLLReg.bat" as an administrator.
 
-Once the MTParserCOM DLL has been registered, the program can be run by executing "Integral Approximator.exe".
-
-Thanks, and I hope my program is useful for you!
+I hope my program is useful for you!
 
 Steven Sheldon - steven.sheldon@live.com
 
-Graphing courtesy of ZedGraph - http://www.zedgraph.org/
+Graphing courtesy of ZedGraph - http://sourceforge.net/projects/zedgraph/
+
 Expression parsing courtesy of MTParser - http://www.codeproject.com/KB/recipes/MathieuMathParser.aspx
+
+Icon from Tulliana 2.0 icon set by M. Umut Pulat (http://12m3.deviantart.com/), converted to .ico by GFXman (http://gfxman.deviantart.com/art/Tulliana-2-0-33145128)
