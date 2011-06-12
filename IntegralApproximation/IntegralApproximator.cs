@@ -244,6 +244,8 @@ namespace IntegralApproximation
 
         #endregion
 
+        #region Evaluation Methods
+
         private PointPairList CalculateIntervalPoints()
         {
             double[] x = CalculateIntervalXValues();
@@ -260,6 +262,17 @@ namespace IntegralApproximation
             }
             x[intervals] = end;
             return x;
+        }
+
+        double XStep
+        {
+            get
+            {
+                //for 1 line segment per pixel
+                //Step = (Resolution * (Max - Min)) / Pixels
+                return (zg1.GraphPane.XAxis.Scale.Max - zg1.GraphPane.XAxis.Scale.Min) /
+                  (zg1.Size.Width - (6 + (int)zg1.GraphPane.Margin.Left) - (int)zg1.GraphPane.Margin.Right);
+            }
         }
 
         private double[] CalculateFunctionXValues(double start, double end)
@@ -306,6 +319,8 @@ namespace IntegralApproximation
             }
             return y;
         }
+
+        #endregion
 
         #region Approximation Methods
 
@@ -390,15 +405,9 @@ namespace IntegralApproximation
             else MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             int parsed;
-            if (!Int32.TryParse(domainUpDown1.Text, out parsed))
-            {
-                MessageBox.Show("Invalid number of subintervals.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                if (parsed < 1) MessageBox.Show("Invalid number of subintervals.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else intervals = parsed;
-            }
+            if (Int32.TryParse(domainUpDown1.Text, out parsed) && parsed >= 1)
+                intervals = parsed;
+            else MessageBox.Show("Invalid number of subintervals.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             if (textBox1.Text != "" && parser.IsValidFunction(textBox1.Text))
                 function = textBox1.Text;
@@ -428,17 +437,6 @@ namespace IntegralApproximation
                 case 4:
                     textBox5.Text = CalculateSimpsonRule().ToString();
                     break;
-            }
-        }
-
-        double XStep
-        {
-            get
-            {
-                //for 1 line segment per pixel
-                //Step = (Resolution * (Max - Min)) / Pixels
-                return (zg1.GraphPane.XAxis.Scale.Max - zg1.GraphPane.XAxis.Scale.Min) /
-                  (zg1.Size.Width - (6 + (int)zg1.GraphPane.Margin.Left) - (int)zg1.GraphPane.Margin.Right);
             }
         }
 
@@ -492,150 +490,70 @@ namespace IntegralApproximation
 
             if ((control is TextBox && !(control as TextBox).ReadOnly) || control is DomainUpDown)
             {
-                switch ((sender as Button).TabIndex)
-                {
-                    case 0:
-                        control.Text += "sqrt(";
-                        break;
-                    case 1:
-                        control.Text += "abs(";
-                        break;
-                    case 2:
-                        control.Text += "fact(";
-                        break;
-                    case 3:
-                        control.Text += "sin(";
-                        break;
-                    case 4:
-                        control.Text += "cos(";
-                        break;
-                    case 5:
-                        control.Text += "tan(";
-                        break;
-                    case 6:
-                        control.Text += "^2";
-                        break;
-                    case 7:
-                        control.Text += "log10(";
-                        break;
-                    case 8:
-                        control.Text += "log(";
-                        break;
-                    case 9:
-                        control.Text += "asin(";
-                        break;
-                    case 10:
-                        control.Text += "acos(";
-                        break;
-                    case 11:
-                        control.Text += "atan(";
-                        break;
-                    case 12:
-                        control.Text += "floor(";
-                        break;
-                    case 13:
-                        control.Text += "ceil(";
-                        break;
-                    case 14:
-                        control.Text += "round(";
-                        break;
-                    case 15:
-                        control.Text += "1/sin(";
-                        break;
-                    case 16:
-                        control.Text += "1/cos(";
-                        break;
-                    case 17:
-                        control.Text += "1/tan(";
-                        break;
-                    case 18:
-                        control.Text += "x";
-                        break;
-                    case 19:
-                        control.Text += "pi";
-                        break;
-                    case 20:
-                        control.Text += "e";
-                        break;
-                    case 21:
-                        control.Text += "sinh(";
-                        break;
-                    case 22:
-                        control.Text += "cosh(";
-                        break;
-                    case 23:
-                        control.Text += "tanh(";
-                        break;
-                    case 24:
-                        control.Text += "%";
-                        break;
-                    case 25:
-                        control.Text += "7";
-                        break;
-                    case 26:
-                        control.Text += "4";
-                        break;
-                    case 27:
-                        control.Text += "1";
-                        break;
-                    case 28:
-                        control.Text += "0";
-                        break;
-                    case 29:
-                        control.Text = control.Text.Remove(control.Text.Length - 1);
-                        break;
-                    case 30:
-                        control.Text += "(";
-                        break;
-                    case 31:
-                        control.Text += "8";
-                        break;
-                    case 32:
-                        control.Text += "5";
-                        break;
-                    case 33:
-                        control.Text += "2";
-                        break;
-                    case 34:
-                        control.Text += ".";
-                        break;
-                    case 35:
-                        control.Text = "";
-                        break;
-                    case 36:
-                        control.Text += ")";
-                        break;
-                    case 37:
-                        control.Text += "9";
-                        break;
-                    case 38:
-                        control.Text += "6";
-                        break;
-                    case 39:
-                        control.Text += "3";
-                        break;
-                    case 40:
-                        control.Text += "x";
-                        break;
-                    case 41:
-                        control.Text += "^";
-                        break;
-                    case 42:
-                        control.Text += "/";
-                        break;
-                    case 43:
-                        control.Text += "*";
-                        break;
-                    case 44:
-                        control.Text += "-";
-                        break;
-                    case 45:
-                        control.Text += "+";
-                        break;
-                }
+                int index = (sender as Button).TabIndex;
+                if (index == 29)
+                    control.Text = control.Text.Remove(control.Text.Length - 1);
+                else if (index == 35)
+                    control.Text = "";
+                else
+                    control.Text += InsertKeyValue(index);                    
                 ActiveControl = control;
                 if (control is TextBox) (control as TextBox).Select(control.Text.Length, 0);
                 if (control is DomainUpDown) (control as DomainUpDown).Select(control.Text.Length, 0);
+            }
+        }
+
+        private string InsertKeyValue(int index)
+        {
+            switch (index)
+            {
+                case 0:  return "sqrt(";
+                case 1:  return "abs(";
+                case 2:  return "fact(";
+                case 3:  return "sin(";
+                case 4:  return "cos(";
+                case 5:  return "tan(";
+                case 6:  return "^2";
+                case 7:  return "log10(";
+                case 8:  return "log(";
+                case 9:  return "asin(";
+                case 10: return "acos(";
+                case 11: return "atan(";
+                case 12: return "floor(";
+                case 13: return "ceil(";
+                case 14: return "round(";
+                case 15: return "1/sin(";
+                case 16: return "1/cos(";
+                case 17: return "1/tan(";
+                case 18: return "x";
+                case 19: return "pi";
+                case 20: return "e";
+                case 21: return "sinh(";
+                case 22: return "cosh(";
+                case 23: return "tanh(";
+                case 24: return "%";
+                case 25: return "7";
+                case 26: return "4";
+                case 27: return "1";
+                case 28: return "0";
+                //   29 is backspace
+                case 30: return "(";
+                case 31: return "8";
+                case 32: return "5";
+                case 33: return "2";
+                case 34: return ".";
+                //   35 is clear
+                case 36: return ")";
+                case 37: return "9";
+                case 38: return "6";
+                case 39: return "3";
+                case 40: return "x";
+                case 41: return "^";
+                case 42: return "/";
+                case 43: return "*";
+                case 44: return "-";
+                case 45: return "+";
+                default: return "";
             }
         }
     }
