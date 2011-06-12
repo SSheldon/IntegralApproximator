@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Integral_Approximation</RootNamespace>
-    <AssemblyName>Integral Approximator</AssemblyName>
+    <AssemblyName>IntegralApproximator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>FC07995C9DDB0368BB2179EEEFC8CAE3616D14EA</ManifestCertificateThumbprint>
