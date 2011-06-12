@@ -59,5 +59,12 @@ namespace IntegralApproximation.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Icon SqrtIcon {
+            get {
+                object obj = ResourceManager.GetObject("SqrtIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
