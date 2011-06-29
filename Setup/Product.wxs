@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}" Name="Integral Approximator" Language="1033" Version="1.0.0.0"
+           Manufacturer="Steven Sheldon" UpgradeCode="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}">
+    <Package InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="Integral Approximator">
+          <Component Id="ZedGraph" Guid="64efbe19-9188-43a3-b427-9eaa6dbe9c6c">
+            <File Id="ZedGraph.dll" Source="../ZedGraph.dll" />
+          </Component>
+          <Component Id="MTParser" Guid="{78CAFDF2-C50C-4729-A17A-897062A4BEB1}">
+            <File Id="Interop.MTPARSERCOMLib.dll" Source="..\Interop.MTPARSERCOMLib.dll" />
+            <File Id="mfc71u.dll" Source="..\mfc71u.dll" />
+            <File Id="MSVCP71.DLL" Source="..\MSVCP71.DLL" />
+            <File Id="msvcr71.dll" Source="..\msvcr71.dll" />
+            <File Id="MTParserCOM.dll" Source="..\MTParserCOM.dll">
+              <TypeLib Id="{3A10DDB0-09C0-4C59-AFC5-71C3EF082DC3}" Description="MTParserCOM 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
+                <Class Id="{0146FD58-5279-4F3F-A70B-77845A2E7B75}" Context="InprocServer32" Description="MTDouble Class" ThreadingModel="free" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTDouble.1" Description="MTDouble Class">
+                    <ProgId Id="MTParserCOM.MTDouble" Description="MTDouble Class" />
+                  </ProgId>
+                </Class>
+                <Class Id="{16E097BF-2BC4-4377-9DA1-E2806ACA81C4}" Context="InprocServer32" Description="MTDoubleVector Class" ThreadingModel="free" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTDoubleVector.1" Description="MTDoubleVector Class">
+                    <ProgId Id="MTParserCOM.MTDoubleVector" Description="MTDoubleVector Class" />
+                  </ProgId>
+                </Class>
+                <Class Id="{2B8F32EE-6861-442E-9071-312E93CC4CF0}" Context="InprocServer32" Description="MTExcepData Class" ThreadingModel="apartment" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTExcepData.1" Description="MTExcepData Class">
+                    <ProgId Id="MTParserCOM.MTExcepData" Description="MTExcepData Class" />
+                  </ProgId>
+                </Class>
+                <Class Id="{39726397-B802-4AB7-90B4-16572007027F}" Context="InprocServer32" Description="MTDate Class" ThreadingModel="free" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTDate.1" Description="MTDate Class">
+                    <ProgId Id="MTParserCOM.MTDate" Description="MTDate Class" />
+                  </ProgId>
+                </Class>
+                <Class Id="{766FBDFE-9EBB-43BD-BA47-4667B00DD3F9}" Context="InprocServer32" Description="MTParserLocalizer Class" ThreadingModel="free" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTParserLocalizer.1" Description="MTParserLocalizer Class">
+                    <ProgId Id="MTParserCOM.MTParserLocalizer" Description="MTParserLocalizer Class" />
+                  </ProgId>
+                </Class>
+                <Class Id="{8C49E58A-FFEA-48F0-A42D-68D2FBE14603}" Context="InprocServer32" Description="MTParser Class" ThreadingModel="free" Programmable="yes">
+                  <ProgId Id="MTParserCOM.MTParser.1" Description="MTParser Class">
+                    <ProgId Id="MTParserCOM.MTParser" Description="MTParser Class" />
+                  </ProgId>
+                </Class>
+                <Interface Id="{138338B4-B343-43C6-B4BB-2A6172875E47}" Name="IMTParserLocalizer" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{287D18CE-1D30-4909-80D2-DF45DA3010F4}" Name="IMTDouble" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{3761F15D-E3AC-43D5-AA4A-333B4F7136D9}" Name="IMTDate" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{604EB4A2-9CB1-49CC-8AAD-FC33F48A78F4}" Name="IMTDoubleVector" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{AB830D10-490E-4228-AE23-01C794E5C036}" Name="IMTParser" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{AC930F10-590E-5928-BE23-12C694D5B035}" Name="IMTVariable" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{B75B4C3F-E77A-42DF-8F25-A368DEC37309}" Name="IMTExcepData" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+                <Interface Id="{ED930F11-520E-5926-BE23-12C694D5B035}" Name="IMTFunction" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+              </TypeLib>
+            </File>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="ProductFeature" Title="Integral Approximator" Level="1">
+      <ComponentRef Id="ZedGraph" />
+      <ComponentRef Id="MTParser" />
+      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+      <ComponentGroupRef Id="Product.Generated" />
+    </Feature>
+  </Product>
+</Wix>
