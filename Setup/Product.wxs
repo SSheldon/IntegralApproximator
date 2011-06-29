@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}" Name="Integral Approximator" Language="1033" Version="1.0.0.0"
            Manufacturer="Steven Sheldon" UpgradeCode="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}">
     <Package InstallerVersion="200" Compressed="yes" />
@@ -76,5 +77,9 @@
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
       <ComponentGroupRef Id="Product.Generated" />
     </Feature>
+    <PropertyRef Id="NETFRAMEWORK35"/>
+    <Condition Message="This application requires .NET Framework 3.5. Please install the .NET Framework, then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK35]]>
+    </Condition>
   </Product>
 </Wix>
