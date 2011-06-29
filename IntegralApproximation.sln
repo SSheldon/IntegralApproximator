@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegralApproximation", "IntegralApproximation\IntegralApproximation.csproj", "{AE2997B8-E329-4D38-B7CA-4814125737F4}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{89D6E792-0D8D-40F6-8DDA-6B1804FA5E6C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +13,6 @@ Global
 		{AE2997B8-E329-4D38-B7CA-4814125737F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE2997B8-E329-4D38-B7CA-4814125737F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE2997B8-E329-4D38-B7CA-4814125737F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89D6E792-0D8D-40F6-8DDA-6B1804FA5E6C}.Debug|Any CPU.ActiveCfg = Debug
-		{89D6E792-0D8D-40F6-8DDA-6B1804FA5E6C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
