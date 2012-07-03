@@ -8,9 +8,6 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLLOCATION" Name="Integral Approximator">
-          <Component Id="ZedGraph" Guid="64efbe19-9188-43a3-b427-9eaa6dbe9c6c">
-            <File Id="ZedGraph.dll" Source="../ZedGraph.dll" />
-          </Component>
           <Component Id="MTParser" Guid="{78CAFDF2-C50C-4729-A17A-897062A4BEB1}">
             <File Id="Interop.MTPARSERCOMLib.dll" Source="..\Interop.MTPARSERCOMLib.dll" />
             <File Id="mfc71u.dll" Source="..\mfc71u.dll" />
@@ -71,7 +68,6 @@
       </Directory>
     </Directory>
     <Feature Id="ProductFeature" Title="Integral Approximator" Level="1">
-      <ComponentRef Id="ZedGraph" />
       <ComponentRef Id="MTParser" />
       <ComponentRef Id="StartShortcut" />
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
