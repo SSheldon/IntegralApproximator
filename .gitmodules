@@ -1,0 +1,3 @@
+[submodule "ZedGraph"]
+	path = ZedGraph
+	url = git://github.com/discomurray/ZedGraph.git
