@@ -1,6 +1,38 @@
-bin/
-obj/
+# User-specific files
 *.suo
-*.csproj.user
-Release/
-Debug/
+*.user
+
+# Build folders
+[Bb]in/
+[Oo]bj/
+[Rr]elease*/
+[Dd]ebug*/
+
+# Build results
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.vspscc
+*.vssscc
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+
+# Vim swap files
+.*.swp
