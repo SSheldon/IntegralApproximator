@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using ZedGraph;
 
@@ -10,8 +11,12 @@ namespace IntegralApproximation
         private double start, end;
         private int intervals;
         private IntegralApproximationType type;
+
         private string function;
         private Parser parser;
+
+        private List<CurveItem> curves;
+        private double graphMin, graphMax, graphStep;
 
         #region Properties
         public string Function
@@ -48,6 +53,8 @@ namespace IntegralApproximation
         public Approximation(Parser parser)
         {
             this.parser = parser;
+
+            this.curves = new List<CurveItem>(3);
         }
 
         /// <summary>
@@ -60,6 +67,23 @@ namespace IntegralApproximation
         }
 
         /// <summary>
+        /// Returns the resulting values for stepping through an interval.
+        /// </summary>
+        /// <param name="min">The minimum value of the interval</param>
+        /// <param name="max">The maximum value of the interval</param>
+        /// <param name="step">The amount to step by</param>
+        private static double[] Steps(double min, double max, double step)
+        {
+            double[] x = new double[(int)Math.Floor((max - min) / step) + 1];
+            for (int counter = 0; counter < x.Length; counter++)
+            {
+                x[counter] = min + step * counter;
+            }
+            return x;
+        }
+
+        #region Graphing
+        /// <summary>
         /// Graphs this Approximation and returns the resulting CurveItems.
         /// </summary>
         /// <param name="min">The minimum x-value of the graph</param>
@@ -67,8 +91,24 @@ namespace IntegralApproximation
         /// <param name="step">The x-step to graph functions with</param>
         public IEnumerable<CurveItem> Graph(double min, double max, double step)
         {
-            return null;
+            curves.Clear();
+            graphMin = min;
+            graphMax = max;
+            graphStep = step;
+
+            GraphFunction();
+
+            return curves;
         }
+
+        private void GraphFunction()
+        {
+            double[] x = Steps(graphMin, graphMax, graphStep);
+            LineItem function = new LineItem("Function", x, Evaluate(x), Color.Red, SymbolType.None);
+            function.Line.IsSmooth = false;
+            curves.Add(function);
+        }
+        #endregion
 
         #region Approximations
         /// <summary>
