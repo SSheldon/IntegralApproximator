@@ -82,6 +82,24 @@ namespace IntegralApproximation
             return x;
         }
 
+        private double[] IntervalXValues()
+        {
+            double[] x = new double[intervals + 1];
+            x[0] = start;
+            for (int counter = 1; counter < intervals; counter++)
+            {
+                x[counter] = start + (double)counter * ((end - start) / (double)intervals);
+            }
+            x[intervals] = end;
+            return x;
+        }
+
+        private PointPairList IntervalPoints()
+        {
+            double[] x = IntervalXValues();
+            return new PointPairList(x, Evaluate(x));
+        }
+
         #region Graphing
         /// <summary>
         /// Graphs this Approximation and returns the resulting CurveItems.
@@ -97,6 +115,21 @@ namespace IntegralApproximation
             graphStep = step;
 
             GraphFunction();
+            switch (type)
+            {
+                case IntegralApproximationType.LeftSum:
+                    GraphLeftSum();
+                    break;
+                case IntegralApproximationType.RightSum:
+                    GraphRightSum();
+                    break;
+                case IntegralApproximationType.MidpointSum:
+                    GraphMidpointSum();
+                    break;
+                case IntegralApproximationType.Trapezoidal:
+                    GraphTrapezoidalApprox();
+                    break;
+            }
 
             return curves;
         }
@@ -107,6 +140,92 @@ namespace IntegralApproximation
             LineItem function = new LineItem("Function", x, Evaluate(x), Color.Red, SymbolType.None);
             function.Line.IsSmooth = false;
             curves.Add(function);
+        }
+
+        private void GraphLeftSum()
+        {
+            double[] x = IntervalXValues();
+            double[] leftEndpoints = new double[intervals];
+            for (int counter = 0; counter < intervals; counter++)
+            {
+                leftEndpoints[counter] = x[counter];
+            }
+            GraphRectangles(Evaluate(leftEndpoints));
+        }
+
+        private void GraphRightSum()
+        {
+            double[] x = IntervalXValues();
+            double[] rightEndpoints = new double[intervals];
+            for (int counter = 0; counter < intervals; counter++)
+            {
+                rightEndpoints[counter] = x[counter + 1];
+            }
+            GraphRectangles(Evaluate(rightEndpoints));
+        }
+
+        private void GraphMidpointSum()
+        {
+            double[] x = IntervalXValues();
+            double[] midpoints = new double[intervals];
+            for (int counter = 0; counter < intervals; counter++)
+            {
+                midpoints[counter] = (x[counter] + x[counter + 1]) / 2D;
+            }
+            GraphRectangles(Evaluate(midpoints));
+        }
+
+        private void GraphRectangles(double[] heights)
+        {
+            if (heights.Length != intervals) return;
+            double[] x = IntervalXValues();
+
+            PointPairList endpoints = new PointPairList();
+            endpoints.Add(x[0], heights[0]);
+            for (int counter = 1; counter < intervals; counter++) endpoints.Add(x[counter], heights[counter]);
+            endpoints.Add(x[intervals], heights[intervals - 1]);
+            GraphSeparators(endpoints);
+
+            PointPairList points = new PointPairList();
+            for (int counter = 0; counter < intervals; counter++)
+            {
+                points.Add(x[counter], heights[counter]);
+                points.Add(x[counter + 1], heights[counter]);
+            }
+            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
+            approx.Line.Fill = new Fill(Color.LightBlue);
+            curves.Add(approx);
+        }
+
+        private void GraphTrapezoidalApprox()
+        {
+            GraphSeparators();
+
+            LineItem approx = new LineItem("Approx", IntervalPoints(), Color.Blue, SymbolType.None);
+            approx.Line.Fill = new Fill(Color.LightBlue);
+            curves.Add(approx);
+        }
+
+        private void GraphSeparators()
+        {
+            GraphSeparators(IntervalPoints());
+        }
+
+        private void GraphSeparators(PointPairList endpoints)
+        {
+            PointPairList points = new PointPairList();
+            endpoints.Sort(SortType.XValues);
+
+            points.Add(endpoints[0]);
+            for (int counter = 0; counter < endpoints.Count - 1; counter++)
+            {
+                points.Add(endpoints[counter].X, 0);
+                points.Add(endpoints[counter + 1].X, 0);
+                points.Add(endpoints[counter + 1]);
+            }
+
+            LineItem separator = new LineItem("Separator", points, Color.Blue, SymbolType.None);
+            curves.Add(separator);
         }
         #endregion
 
