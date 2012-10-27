@@ -197,6 +197,28 @@ namespace IntegralApproximation
             GraphRectangles(Function(midpoints));
         }
 
+        private void GraphRectangles(double[] heights)
+        {
+            if (heights.Length != intervals) return;
+            double[] x = CalculateIntervalXValues();
+
+            PointPairList endpoints = new PointPairList();
+            endpoints.Add(x[0], heights[0]);
+            for (int counter = 1; counter < intervals; counter++) endpoints.Add(x[counter], heights[counter]);
+            endpoints.Add(x[intervals], heights[intervals - 1]);
+            GraphSeperators(endpoints);
+
+            PointPairList points = new PointPairList();
+            for (int counter = 0; counter < intervals; counter++)
+            {
+                points.Add(x[counter], heights[counter]);
+                points.Add(x[counter + 1], heights[counter]);
+            }
+            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
+            approx.Line.Fill = new Fill(Color.LightBlue);
+            zg1.GraphPane.CurveList.Add(approx);
+        }
+
         private void GraphTrapezoidalApprox()
         {
             GraphSeperators();
@@ -248,28 +270,6 @@ namespace IntegralApproximation
 
             LineItem seperator = new LineItem("Seperator", points, Color.Blue, SymbolType.None);
             zg1.GraphPane.CurveList.Add(seperator);
-        }
-
-        private void GraphRectangles(double[] heights)
-        {
-            if (heights.Length != intervals) return;
-            double[] x = CalculateIntervalXValues();
-
-            PointPairList endpoints = new PointPairList();
-            endpoints.Add(x[0], heights[0]);
-            for (int counter = 1; counter < intervals; counter++) endpoints.Add(x[counter], heights[counter]);
-            endpoints.Add(x[intervals], heights[intervals - 1]);
-            GraphSeperators(endpoints);
-
-            PointPairList points = new PointPairList();
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                points.Add(x[counter], heights[counter]);
-                points.Add(x[counter + 1], heights[counter]);
-            }
-            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
-            approx.Line.Fill = new Fill(Color.LightBlue);
-            zg1.GraphPane.CurveList.Add(approx);
         }
 
         #endregion
