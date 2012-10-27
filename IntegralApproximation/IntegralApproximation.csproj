@@ -78,6 +78,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Approximation.cs" />
     <Compile Include="IntegralApproximator.cs">
       <SubType>Form</SubType>
     </Compile>
