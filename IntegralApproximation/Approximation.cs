@@ -66,6 +66,28 @@ namespace IntegralApproximation
             return parser.Evaluate(function, x);
         }
 
+        private double Evaluate(double x)
+        {
+            return parser.Evaluate(function, x);
+        }
+
+        private double[] EvaluateQuadraticInterpolation(double[] x, double a, double b)
+        {
+            double[] y = new double[x.Length];
+            double m = (a + b) / 2D;
+            double fA = Evaluate(a);
+            double fM = Evaluate(m);
+            double fB = Evaluate(b);
+
+            for (int counter = 0; counter < x.Length; counter++)
+            {
+                y[counter] = fA * (((x[counter] - m) * (x[counter] - b)) / ((a - m) * (a - b))) +
+                    fM * (((x[counter] - a) * (x[counter] - b)) / ((m - a) * (m - b))) +
+                    fB * (((x[counter] - a) * (x[counter] - m)) / ((b - a) * (b - m)));
+            }
+            return y;
+        }
+
         /// <summary>
         /// Returns the resulting values for stepping through an interval.
         /// </summary>
@@ -128,6 +150,9 @@ namespace IntegralApproximation
                     break;
                 case IntegralApproximationType.Trapezoidal:
                     GraphTrapezoidalApprox();
+                    break;
+                case IntegralApproximationType.Simpson:
+                    GraphSimpsonRule();
                     break;
             }
 
@@ -203,6 +228,28 @@ namespace IntegralApproximation
 
             LineItem approx = new LineItem("Approx", IntervalPoints(), Color.Blue, SymbolType.None);
             approx.Line.Fill = new Fill(Color.LightBlue);
+            curves.Add(approx);
+        }
+
+        private void GraphSimpsonRule()
+        {
+            GraphSeparators();
+
+            PointPairList points = new PointPairList();
+            double[] endpoints = IntervalXValues();
+
+            for (int interval = 0; interval < intervals; interval++)
+            {
+                double a = endpoints[interval];
+                double b = endpoints[interval + 1];
+                double[] x = Steps(a, b, graphStep);
+                points.Add(x, EvaluateQuadraticInterpolation(x, a, b));
+                //Common endpoints are being added twice...
+            }
+
+            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
+            approx.Line.Fill = new Fill(Color.LightBlue);
+            approx.Line.IsSmooth = false;
             curves.Add(approx);
         }
 
