@@ -6,6 +6,9 @@ using ZedGraph;
 
 namespace IntegralApproximation
 {
+    public enum IntegralApproximationType
+    { LeftSum, RightSum, MidpointSum, Trapezoidal, Simpson }
+
     public partial class IntegralApproximator : Form
     {
         double start = 0, end = 4;
@@ -136,6 +139,28 @@ namespace IntegralApproximation
             double[] x = CalculateFunctionXValues(zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max);
             LineItem function = zg1.GraphPane.AddCurve("Function", x, Function(x), Color.Red, SymbolType.None);
             function.Line.IsSmooth = false;
+        }
+
+        private void GraphApproximation(IntegralApproximationType type)
+        {
+            switch (type)
+            {
+                case IntegralApproximationType.LeftSum:
+                    GraphLeftSum();
+                    break;
+                case IntegralApproximationType.RightSum:
+                    GraphRightSum();
+                    break;
+                case IntegralApproximationType.MidpointSum:
+                    GraphMidpointSum();
+                    break;
+                case IntegralApproximationType.Trapezoidal:
+                    GraphTrapezoidalApprox();
+                    break;
+                case IntegralApproximationType.Simpson:
+                    GraphSimpsonRule();
+                    break;
+            }
         }
 
         private void GraphLeftSum()
@@ -324,6 +349,25 @@ namespace IntegralApproximation
 
         #region Approximation Methods
 
+        private double CalculateApproximation(IntegralApproximationType type)
+        {
+            switch (type)
+            {
+                case IntegralApproximationType.LeftSum:
+                    return CalculateLeftSum();
+                case IntegralApproximationType.RightSum:
+                    return CalculateRightSum();
+                case IntegralApproximationType.MidpointSum:
+                    return CalculateMidpointSum();
+                case IntegralApproximationType.Trapezoidal:
+                    return CalculateTrapezoidalApprox();
+                case IntegralApproximationType.Simpson:
+                    return CalculateSimpsonRule();
+                default:
+                    return 0;
+            }
+        }
+
         private double CalculateRightSum()
         {
             double[] x = new double[intervals];
@@ -372,24 +416,7 @@ namespace IntegralApproximation
             zg1.GraphPane.CurveList.Clear();
 
             GraphFunction();
-            switch (comboBox1.SelectedIndex)
-            {
-                case 0:
-                    GraphLeftSum();
-                    break;
-                case 1:
-                    GraphRightSum();
-                    break;
-                case 2:
-                    GraphMidpointSum();
-                    break;
-                case 3:
-                    GraphTrapezoidalApprox();
-                    break;
-                case 4:
-                    GraphSimpsonRule();
-                    break;
-            }
+            GraphApproximation((IntegralApproximationType)comboBox1.SelectedIndex);
 
             zg1.Refresh();
         }
@@ -420,24 +447,8 @@ namespace IntegralApproximation
         //must be called when parameters are updated
         private void UpdateApproximation()
         {
-            switch (comboBox1.SelectedIndex)
-            {
-                case 0:
-                    textBox5.Text = CalculateLeftSum().ToString();
-                    break;
-                case 1:
-                    textBox5.Text = CalculateRightSum().ToString();
-                    break;
-                case 2:
-                    textBox5.Text = CalculateMidpointSum().ToString();
-                    break;
-                case 3:
-                    textBox5.Text = CalculateTrapezoidalApprox().ToString();
-                    break;
-                case 4:
-                    textBox5.Text = CalculateSimpsonRule().ToString();
-                    break;
-            }
+            IntegralApproximationType type = (IntegralApproximationType)comboBox1.SelectedIndex;
+            textBox5.Text = CalculateApproximation(type).ToString();
         }
 
         void zg1_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)
