@@ -137,8 +137,9 @@ namespace IntegralApproximation
         private void GraphFunction()
         {
             double[] x = CalculateFunctionXValues(zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max);
-            LineItem function = zg1.GraphPane.AddCurve("Function", x, Function(x), Color.Red, SymbolType.None);
+            LineItem function = new LineItem("Function", x, Function(x), Color.Red, SymbolType.None);
             function.Line.IsSmooth = false;
+            zg1.GraphPane.CurveList.Add(function);
         }
 
         private void GraphApproximation(IntegralApproximationType type)
@@ -200,8 +201,9 @@ namespace IntegralApproximation
         {
             GraphSeperators();
 
-            LineItem approx = zg1.GraphPane.AddCurve("Approx", CalculateIntervalPoints(), Color.Blue, SymbolType.None);
+            LineItem approx = new LineItem("Approx", CalculateIntervalPoints(), Color.Blue, SymbolType.None);
             approx.Line.Fill = new Fill(Color.LightBlue);
+            zg1.GraphPane.CurveList.Add(approx);
         }
 
         private void GraphSimpsonRule()
@@ -220,9 +222,10 @@ namespace IntegralApproximation
                 //Common endpoints are being added twice...
             }
 
-            LineItem approx = zg1.GraphPane.AddCurve("Approx", points, Color.Blue, SymbolType.None);
+            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
             approx.Line.Fill = new Fill(Color.LightBlue);
             approx.Line.IsSmooth = false;
+            zg1.GraphPane.CurveList.Add(approx);
         }
 
         private void GraphSeperators()
@@ -243,7 +246,8 @@ namespace IntegralApproximation
                 points.Add(endpoints[counter + 1]);
             }
 
-            LineItem seperator = zg1.GraphPane.AddCurve("Seperator", points, Color.Blue, SymbolType.None);
+            LineItem seperator = new LineItem("Seperator", points, Color.Blue, SymbolType.None);
+            zg1.GraphPane.CurveList.Add(seperator);
         }
 
         private void GraphRectangles(double[] heights)
@@ -263,8 +267,9 @@ namespace IntegralApproximation
                 points.Add(x[counter], heights[counter]);
                 points.Add(x[counter + 1], heights[counter]);
             }
-            LineItem approx = zg1.GraphPane.AddCurve("Approx", points, Color.Blue, SymbolType.None);
+            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
             approx.Line.Fill = new Fill(Color.LightBlue);
+            zg1.GraphPane.CurveList.Add(approx);
         }
 
         #endregion
