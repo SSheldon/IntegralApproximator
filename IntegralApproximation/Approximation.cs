@@ -6,22 +6,43 @@ namespace IntegralApproximation
 {
     class Approximation
     {
+        private double start, end;
+        private int intervals;
+        private IntegralApproximationType type;
+        private string function;
         private Parser parser;
 
+        #region Properties
         public string Function
-        { get; set; }
+        {
+            get { return function; }
+            set { function = value; }
+        }
 
         public double Start
-        { get; set; }
+        {
+            get { return start; }
+            set { start = value; }
+        }
 
         public double End
-        { get; set; }
+        {
+            get { return end; }
+            set { end = value; }
+        }
 
         public int Intervals
-        { get; set; }
+        {
+            get { return intervals; }
+            set { intervals = value; }
+        }
 
         public IntegralApproximationType Type
-        { get; set; }
+        {
+            get { return type; }
+            set { type = value; }
+        }
+        #endregion
 
         public Approximation(Parser parser)
         {
