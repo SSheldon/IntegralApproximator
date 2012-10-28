@@ -148,12 +148,14 @@ namespace IntegralApproximation
         }
 
         //must be called when parameters or window are updated
-        private void UpdateGraph()
+        private void UpdateGraph(bool recalculate = false)
         {
             zg1.GraphPane.CurveList.Clear();
             zg1.GraphPane.CurveList.AddRange(approx.Graph(
                 zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max, XStep));
             zg1.Refresh();
+
+            if (recalculate) textBox5.Text = approx.Calculate().ToString();
         }
 
         private void UpdateParameters()
@@ -177,9 +179,7 @@ namespace IntegralApproximation
 
             approx.Type = (IntegralApproximationType)comboBox1.SelectedIndex;
 
-            UpdateGraph();
-
-            textBox5.Text = approx.Calculate().ToString();
+            UpdateGraph(recalculate: true);
         }
 
         void zg1_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)
