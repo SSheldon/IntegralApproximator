@@ -6,9 +6,6 @@ using ZedGraph;
 
 namespace IntegralApproximation
 {
-    public enum IntegralApproximationType
-    { LeftSum, RightSum, MidpointSum, Trapezoidal, Simpson }
-
     public partial class IntegralApproximator : Form
     {
         Approximation approx;
