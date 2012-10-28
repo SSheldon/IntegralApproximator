@@ -11,9 +11,7 @@ namespace IntegralApproximation
 
     public partial class IntegralApproximator : Form
     {
-        double start = 0, end = 4;
-        int intervals = 4;
-        string function = "(x-2)^2+2";
+        Approximation approx;
         Parser parser;
         Control lastActiveInputBox;
         Timer timer;
@@ -55,12 +53,18 @@ namespace IntegralApproximation
             this.AcceptButton = this.button1;
             this.lastActiveInputBox = textBox1;
 
-            textBox1.Text = function;
-            textBox2.Text = start.ToString();
-            textBox3.Text = end.ToString();
+            approx = new Approximation(parser);
+            approx.Function = "(x-2)^2+2";
+            approx.Start = 0;
+            approx.End = 4;
+            approx.Intervals = 4;
+
+            textBox1.Text = approx.Function;
+            textBox2.Text = approx.Start.ToString();
+            textBox3.Text = approx.End.ToString();
             //by changing the text, the index changes, causing the index to be reset
             //and the surrounding numbers to be generated
-            domainUpDown1.Text = intervals.ToString();
+            domainUpDown1.Text = approx.Intervals.ToString();
 
             InitializeGraph();
             zg1.ZoomEvent += new ZedGraphControl.ZoomEventHandler(zg1_ZoomEvent);
@@ -132,168 +136,6 @@ namespace IntegralApproximation
             UpdateGraph();
         }
 
-        #region Graphing Methods
-
-        private void GraphFunction()
-        {
-            double[] x = CalculateFunctionXValues(zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max);
-            LineItem function = new LineItem("Function", x, Function(x), Color.Red, SymbolType.None);
-            function.Line.IsSmooth = false;
-            zg1.GraphPane.CurveList.Add(function);
-        }
-
-        private void GraphApproximation(IntegralApproximationType type)
-        {
-            switch (type)
-            {
-                case IntegralApproximationType.LeftSum:
-                    GraphLeftSum();
-                    break;
-                case IntegralApproximationType.RightSum:
-                    GraphRightSum();
-                    break;
-                case IntegralApproximationType.MidpointSum:
-                    GraphMidpointSum();
-                    break;
-                case IntegralApproximationType.Trapezoidal:
-                    GraphTrapezoidalApprox();
-                    break;
-                case IntegralApproximationType.Simpson:
-                    GraphSimpsonRule();
-                    break;
-            }
-        }
-
-        private void GraphLeftSum()
-        {
-            double[] x = CalculateIntervalXValues();
-            double[] leftEndpoints = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                leftEndpoints[counter] = x[counter];
-            }
-            GraphRectangles(Function(leftEndpoints));
-        }
-
-        private void GraphRightSum()
-        {
-            double[] x = CalculateIntervalXValues();
-            double[] rightEndpoints = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                rightEndpoints[counter] = x[counter + 1];
-            }
-            GraphRectangles(Function(rightEndpoints));
-        }
-
-        private void GraphMidpointSum()
-        {
-            double[] x = CalculateIntervalXValues();
-            double[] midpoints = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                midpoints[counter] = (x[counter] + x[counter + 1]) / 2D;
-            }
-            GraphRectangles(Function(midpoints));
-        }
-
-        private void GraphRectangles(double[] heights)
-        {
-            if (heights.Length != intervals) return;
-            double[] x = CalculateIntervalXValues();
-
-            PointPairList endpoints = new PointPairList();
-            endpoints.Add(x[0], heights[0]);
-            for (int counter = 1; counter < intervals; counter++) endpoints.Add(x[counter], heights[counter]);
-            endpoints.Add(x[intervals], heights[intervals - 1]);
-            GraphSeperators(endpoints);
-
-            PointPairList points = new PointPairList();
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                points.Add(x[counter], heights[counter]);
-                points.Add(x[counter + 1], heights[counter]);
-            }
-            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
-            approx.Line.Fill = new Fill(Color.LightBlue);
-            zg1.GraphPane.CurveList.Add(approx);
-        }
-
-        private void GraphTrapezoidalApprox()
-        {
-            GraphSeperators();
-
-            LineItem approx = new LineItem("Approx", CalculateIntervalPoints(), Color.Blue, SymbolType.None);
-            approx.Line.Fill = new Fill(Color.LightBlue);
-            zg1.GraphPane.CurveList.Add(approx);
-        }
-
-        private void GraphSimpsonRule()
-        {
-            GraphSeperators();
-
-            PointPairList points = new PointPairList();
-            double[] endpoints = CalculateIntervalXValues();
-
-            for (int interval = 0; interval < intervals; interval++)
-            {
-                double a = endpoints[interval];
-                double b = endpoints[interval + 1];
-                double[] x = CalculateFunctionXValues(a, b);
-                points.Add(x, InterpolatedQuadraticFunction(x, a, b));
-                //Common endpoints are being added twice...
-            }
-
-            LineItem approx = new LineItem("Approx", points, Color.Blue, SymbolType.None);
-            approx.Line.Fill = new Fill(Color.LightBlue);
-            approx.Line.IsSmooth = false;
-            zg1.GraphPane.CurveList.Add(approx);
-        }
-
-        private void GraphSeperators()
-        {
-            GraphSeperators(CalculateIntervalPoints());
-        }
-
-        private void GraphSeperators(PointPairList endpoints)
-        {
-            PointPairList points = new PointPairList();
-            endpoints.Sort(SortType.XValues);
-
-            points.Add(endpoints[0]);
-            for (int counter = 0; counter < endpoints.Count - 1; counter++)
-            {
-                points.Add(endpoints[counter].X, 0);
-                points.Add(endpoints[counter + 1].X, 0);
-                points.Add(endpoints[counter + 1]);
-            }
-
-            LineItem seperator = new LineItem("Seperator", points, Color.Blue, SymbolType.None);
-            zg1.GraphPane.CurveList.Add(seperator);
-        }
-
-        #endregion
-
-        #region Evaluation Methods
-
-        private PointPairList CalculateIntervalPoints()
-        {
-            double[] x = CalculateIntervalXValues();
-            return new PointPairList(x, Function(x));
-        }
-
-        private double[] CalculateIntervalXValues()
-        {
-            double[] x = new double[intervals + 1];
-            x[0] = start;
-            for (int counter = 1; counter < intervals; counter++)
-            {
-                x[counter] = start + (double)counter * ((end - start) / (double)intervals);
-            }
-            x[intervals] = end;
-            return x;
-        }
-
         double XStep
         {
             get
@@ -305,124 +147,12 @@ namespace IntegralApproximation
             }
         }
 
-        private double[] CalculateFunctionXValues(double start, double end)
-        {
-            double[] x = new double[(int)Math.Floor((end - start) / XStep) + 1];
-            for (int counter = 0; counter < x.Length; counter++)
-            {
-                x[counter] = start + XStep * (double)counter;
-            }
-            return x;
-        }
-
-        private double[] Function(double[] x)
-        {
-            return parser.Evaluate(function, x);
-        }
-
-        private double Function(double x)
-        {
-            return parser.Evaluate(function, x);
-        }
-
-        private double InterpolatedQuadraticFunction(double x, double a, double b)
-        {
-            double m = (a + b) / 2D;
-            return Function(a) * (((x - m) * (x - b)) / ((a - m) * (a - b))) +
-                Function(m) * (((x - a) * (x - b)) / ((m - a) * (m - b))) +
-                Function(b) * (((x - a) * (x - m)) / ((b - a) * (b - m)));
-        }
-
-        private double[] InterpolatedQuadraticFunction(double[] x, double a, double b)
-        {
-            double[] y = new double[x.Length];
-            double m = (a + b) / 2D;
-            double fA = Function(a);
-            double fM = Function(m);
-            double fB = Function(b);
-
-            for (int counter = 0; counter < x.Length; counter++)
-            {
-                y[counter] = fA * (((x[counter] - m) * (x[counter] - b)) / ((a - m) * (a - b))) +
-                    fM * (((x[counter] - a) * (x[counter] - b)) / ((m - a) * (m - b))) +
-                    fB * (((x[counter] - a) * (x[counter] - m)) / ((b - a) * (b - m)));
-            }
-            return y;
-        }
-
-        #endregion
-
-        #region Approximation Methods
-
-        private double CalculateApproximation(IntegralApproximationType type)
-        {
-            switch (type)
-            {
-                case IntegralApproximationType.LeftSum:
-                    return CalculateLeftSum();
-                case IntegralApproximationType.RightSum:
-                    return CalculateRightSum();
-                case IntegralApproximationType.MidpointSum:
-                    return CalculateMidpointSum();
-                case IntegralApproximationType.Trapezoidal:
-                    return CalculateTrapezoidalApprox();
-                case IntegralApproximationType.Simpson:
-                    return CalculateSimpsonRule();
-                default:
-                    return 0;
-            }
-        }
-
-        private double CalculateRightSum()
-        {
-            double[] x = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                x[counter] = start + ((end - start) / (double)intervals) * (double)(counter + 1);
-            }
-            return Function(x).Sum() * ((end - start) / (double)intervals);
-        }
-
-        private double CalculateLeftSum()
-        {
-            double[] x = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                x[counter] = start + ((end - start) / (double)intervals) * (double)(counter);
-            }
-            return Function(x).Sum() * ((end - start) / (double)intervals);
-        }
-
-        private double CalculateMidpointSum()
-        {
-            double[] x = new double[intervals];
-            for (int counter = 0; counter < intervals; counter++)
-            {
-                x[counter] = start + ((end - start) / (double)intervals) * ((double)counter + .5D);
-            }
-            return Function(x).Sum() * ((end - start) / (double)intervals);
-        }
-
-        private double CalculateTrapezoidalApprox()
-        {
-            return (CalculateRightSum() + CalculateLeftSum()) / 2D;
-        }
-
-        private double CalculateSimpsonRule()
-        {
-            return (2D * CalculateMidpointSum() + CalculateTrapezoidalApprox()) / 3D;
-        }
-
-        #endregion
-
         //must be called when parameters or window are updated
         private void UpdateGraph()
         {
             zg1.GraphPane.CurveList.Clear();
-
-            GraphFunction();
-            GraphApproximation((IntegralApproximationType)comboBox1.SelectedIndex);
-
+            zg1.GraphPane.CurveList.AddRange(approx.Graph(
+                zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max, XStep));
             zg1.Refresh();
         }
 
@@ -431,29 +161,25 @@ namespace IntegralApproximation
             if (parser.IsValidExpression(textBox2.Text) && parser.IsValidExpression(textBox3.Text) &&
                 parser.Evaluate(textBox2.Text) < parser.Evaluate(textBox3.Text))
             {
-                start = parser.Evaluate(textBox2.Text);
-                end = parser.Evaluate(textBox3.Text);
+                approx.Start = parser.Evaluate(textBox2.Text);
+                approx.End = parser.Evaluate(textBox3.Text);
             }
             else MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             int parsed;
             if (Int32.TryParse(domainUpDown1.Text, out parsed) && parsed >= 1)
-                intervals = parsed;
+                approx.Intervals = parsed;
             else MessageBox.Show("Invalid number of subintervals.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             if (textBox1.Text != "" && parser.IsValidFunction(textBox1.Text))
-                function = textBox1.Text;
+                approx.Function = textBox1.Text;
             else MessageBox.Show("Invalid equation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            UpdateGraph();
-            UpdateApproximation();
-        }
+            approx.Type = (IntegralApproximationType)comboBox1.SelectedIndex;
 
-        //must be called when parameters are updated
-        private void UpdateApproximation()
-        {
-            IntegralApproximationType type = (IntegralApproximationType)comboBox1.SelectedIndex;
-            textBox5.Text = CalculateApproximation(type).ToString();
+            UpdateGraph();
+
+            textBox5.Text = approx.Calculate().ToString();
         }
 
         void zg1_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)
