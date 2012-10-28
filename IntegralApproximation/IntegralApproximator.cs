@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -144,17 +146,6 @@ namespace IntegralApproximation
             }
         }
 
-        //must be called when parameters or window are updated
-        private void UpdateGraph(bool recalculate = false)
-        {
-            zg1.GraphPane.CurveList.Clear();
-            zg1.GraphPane.CurveList.AddRange(approx.Graph(
-                zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max, XStep));
-            zg1.Refresh();
-
-            if (recalculate) textBox5.Text = approx.Calculate().ToString();
-        }
-
         private void UpdateParameters()
         {
             double? start = parser.TryEvaluate(textBox2.Text);
@@ -178,6 +169,42 @@ namespace IntegralApproximation
             approx.Type = (IntegralApproximationType)comboBox1.SelectedIndex;
 
             UpdateGraph(recalculate: true);
+        }
+
+        //must be called when parameters or window are updated
+        private void UpdateGraph(bool recalculate = false)
+        {
+            if (!approximationWorker.IsBusy)
+            {
+                approximationWorker.RunWorkerAsync(recalculate);
+            }
+        }
+
+        private class ApproximationWorkerResult
+        {
+            public IEnumerable<CurveItem> curves;
+            public double? approximation;
+        }
+
+        private void approximationWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ApproximationWorkerResult result = new ApproximationWorkerResult();
+            result.curves = approx.Graph(zg1.GraphPane.XAxis.Scale.Min, zg1.GraphPane.XAxis.Scale.Max, XStep);
+            if ((bool)e.Argument) result.approximation = approx.Calculate();
+            e.Result = result;
+        }
+
+        private void approximationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ApproximationWorkerResult result = e.Result as ApproximationWorkerResult;
+            zg1.GraphPane.CurveList.Clear();
+            zg1.GraphPane.CurveList.AddRange(result.curves);
+            zg1.Refresh();
+
+            if (result.approximation.HasValue)
+            {
+                textBox5.Text = result.approximation.Value.ToString();
+            }
         }
 
         void zg1_ZoomEvent(ZedGraphControl sender, ZoomState oldState, ZoomState newState)

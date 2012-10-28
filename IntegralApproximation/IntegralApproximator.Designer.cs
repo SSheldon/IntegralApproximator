@@ -94,6 +94,7 @@
             this.button48 = new System.Windows.Forms.Button();
             this.button49 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.approximationWorker = new System.ComponentModel.BackgroundWorker();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -810,6 +811,11 @@
             this.linkLabel1.Text = "github.com/SSheldon/IntegralApproximator";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // approximationWorker
+            // 
+            this.approximationWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.approximationWorker_DoWork);
+            this.approximationWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.approximationWorker_RunWorkerCompleted);
+            // 
             // IntegralApproximator
             // 
             this.AcceptButton = this.button1;
@@ -912,6 +918,7 @@
         private System.Windows.Forms.Button button48;
         private System.Windows.Forms.Button button49;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.ComponentModel.BackgroundWorker approximationWorker;
     }
 }
 
