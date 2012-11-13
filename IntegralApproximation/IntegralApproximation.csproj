@@ -68,11 +68,6 @@
     <ApplicationIcon>Resources\SqrtIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.MTPARSERCOMLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\Interop.MTPARSERCOMLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -157,6 +152,10 @@
     <None Include="Resources\SqrtIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YAMP\YAMP\YAMP.csproj">
+      <Project>{0F183B45-E213-4DB0-9734-3CE7E26EB318}</Project>
+      <Name>YAMP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZedGraph\source\ZedGraph.csproj">
       <Project>{2541686B-1673-43BF-AF89-3163945DB009}</Project>
       <Name>ZedGraph</Name>
