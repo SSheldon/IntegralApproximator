@@ -1,3 +1,6 @@
 [submodule "ZedGraph"]
 	path = ZedGraph
 	url = git://github.com/discomurray/ZedGraph.git
+[submodule "YAMP"]
+	path = YAMP
+	url = git://github.com/FlorianRappl/YAMP.git

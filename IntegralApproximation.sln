@@ -7,6 +7,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixpro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZedGraph", "ZedGraph\source\ZedGraph.csproj", "{2541686B-1673-43BF-AF89-3163945DB009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAMP", "YAMP\YAMP\YAMP.csproj", "{0F183B45-E213-4DB0-9734-3CE7E26EB318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{2541686B-1673-43BF-AF89-3163945DB009}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2541686B-1673-43BF-AF89-3163945DB009}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2541686B-1673-43BF-AF89-3163945DB009}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0F183B45-E213-4DB0-9734-3CE7E26EB318}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
