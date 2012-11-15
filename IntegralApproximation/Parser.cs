@@ -38,11 +38,7 @@ namespace IntegralApproximation
                 YAMP.Parser parser = YAMP.Parser.Parse(expression);
                 return ((ScalarValue)parser.Execute()).Value;
             }
-            catch (YAMPException)
-            {
-                return null;
-            }
-            catch (InvalidCastException)
+            catch (Exception)
             {
                 return null;
             }
@@ -56,11 +52,7 @@ namespace IntegralApproximation
                 YAMP.Parser parser = YAMP.Parser.Parse(function);
                 return ((ScalarValue)parser.Execute(values)).Value;
             }
-            catch (YAMPException)
-            {
-                return null;
-            }
-            catch (InvalidCastException)
+            catch (Exception)
             {
                 return null;
             }
@@ -81,11 +73,7 @@ namespace IntegralApproximation
                 }
                 return y;
             }
-            catch (YAMPException)
-            {
-                return null;
-            }
-            catch (InvalidCastException)
+            catch (Exception)
             {
                 return null;
             }
