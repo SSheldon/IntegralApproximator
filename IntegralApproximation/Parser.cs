@@ -36,9 +36,13 @@ namespace IntegralApproximation
             try
             {
                 YAMP.Parser parser = YAMP.Parser.Parse(expression);
-                return (parser.Execute() as ScalarValue).Value;
+                return ((ScalarValue)parser.Execute()).Value;
             }
             catch (YAMPException)
+            {
+                return null;
+            }
+            catch (InvalidCastException)
             {
                 return null;
             }
@@ -50,9 +54,13 @@ namespace IntegralApproximation
             {
                 Hashtable values = new Hashtable { { "x", x } };
                 YAMP.Parser parser = YAMP.Parser.Parse(function);
-                return (parser.Execute(values) as ScalarValue).Value;
+                return ((ScalarValue)parser.Execute(values)).Value;
             }
             catch (YAMPException)
+            {
+                return null;
+            }
+            catch (InvalidCastException)
             {
                 return null;
             }
@@ -69,11 +77,15 @@ namespace IntegralApproximation
                 for (int i = 0; i < x.Length; i++)
                 {
                     values["x"] = x[i];
-                    y[i] = (parser.Execute(values) as ScalarValue).Value;
+                    y[i] = ((ScalarValue)parser.Execute(values)).Value;
                 }
                 return y;
             }
             catch (YAMPException)
+            {
+                return null;
+            }
+            catch (InvalidCastException)
             {
                 return null;
             }
