@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using YAMP;
 
 namespace IntegralApproximation
@@ -48,7 +48,8 @@ namespace IntegralApproximation
         {
             try
             {
-                Hashtable values = new Hashtable { { "x", x } };
+                Dictionary<string, Value> values =
+                    new Dictionary<string, Value> { { "x", new ScalarValue(x) } };
                 YAMP.Parser parser = YAMP.Parser.Parse(function);
                 return ((ScalarValue)parser.Execute(values)).Value;
             }
@@ -64,11 +65,13 @@ namespace IntegralApproximation
             try
             {
                 double[] y = new double[x.Length];
-                Hashtable values = new Hashtable();
+                Dictionary<string, Value> values = new Dictionary<string, Value>();
+                ScalarValue value = new ScalarValue();
+                values["x"] = value;
                 YAMP.Parser parser = YAMP.Parser.Parse(function);
                 for (int i = 0; i < x.Length; i++)
                 {
-                    values["x"] = x[i];
+                    value.Value = x[i];
                     y[i] = ((ScalarValue)parser.Execute(values)).Value;
                 }
                 return y;
