@@ -43,7 +43,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -250,16 +249,6 @@
             this.label5.Size = new System.Drawing.Size(30, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "f(x) =";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(-3, 554);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(262, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Created by Steven Sheldon steven.sheldon@live.com";
             // 
             // domainUpDown1
             // 
@@ -832,7 +821,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.zg1);
-            this.Controls.Add(this.label6);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "IntegralApproximator";
             this.Text = "Integral Approximator";
@@ -860,7 +848,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DomainUpDown domainUpDown1;
         private System.Windows.Forms.TabControl tabControl1;
