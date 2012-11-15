@@ -248,16 +248,16 @@ namespace IntegralApproximation
             {
                 case 0:  return "sqrt(";
                 case 1:  return "abs(";
-                case 2:  return "fact(";
+                case 2:  return "!";
                 case 3:  return "sin(";
                 case 4:  return "cos(";
                 case 5:  return "tan(";
                 case 6:  return "^2";
-                case 7:  return "log10(";
-                case 8:  return "log(";
-                case 9:  return "asin(";
-                case 10: return "acos(";
-                case 11: return "atan(";
+                case 7:  return "log(";
+                case 8:  return "ln(";
+                case 9:  return "arcsin(";
+                case 10: return "arccos(";
+                case 11: return "arctan(";
                 case 12: return "floor(";
                 case 13: return "ceil(";
                 case 14: return "round(";
@@ -270,7 +270,7 @@ namespace IntegralApproximation
                 case 21: return "sinh(";
                 case 22: return "cosh(";
                 case 23: return "tanh(";
-                case 24: return "%";
+                //   24 was modulo
                 case 25: return "7";
                 case 26: return "4";
                 case 27: return "1";
