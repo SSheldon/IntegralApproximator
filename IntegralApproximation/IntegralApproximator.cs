@@ -157,11 +157,12 @@ namespace IntegralApproximation
 
         private void UpdateParameters()
         {
-            if (parser.IsValidExpression(textBox2.Text) && parser.IsValidExpression(textBox3.Text) &&
-                parser.Evaluate(textBox2.Text) < parser.Evaluate(textBox3.Text))
+            double? start = parser.TryEvaluate(textBox2.Text);
+            double? end   = parser.TryEvaluate(textBox3.Text);
+            if (start.HasValue && end.HasValue && start.Value < end.Value)
             {
-                approx.Start = parser.Evaluate(textBox2.Text);
-                approx.End = parser.Evaluate(textBox3.Text);
+                approx.Start = start.Value;
+                approx.End = end.Value;
             }
             else MessageBox.Show("Invalid interval endpoint.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 

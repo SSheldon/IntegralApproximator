@@ -32,32 +32,28 @@ namespace IntegralApproximation
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (parser.IsValidExpression(textBox1.Text) && parser.IsValidExpression(textBox2.Text) &&
-                parser.IsValidExpression(textBox3.Text) && parser.IsValidExpression(textBox4.Text) &&
-                parser.IsValidExpression(textBox5.Text) && parser.IsValidExpression(textBox6.Text))
-            {
-                double xMin   = parser.Evaluate(textBox1.Text);
-                double xMax   = parser.Evaluate(textBox2.Text);
-                double xScale = parser.Evaluate(textBox3.Text);
-                double yMin   = parser.Evaluate(textBox4.Text);
-                double yMax   = parser.Evaluate(textBox5.Text);
-                double yScale = parser.Evaluate(textBox6.Text);
+            double? xMin   = parser.TryEvaluate(textBox1.Text);
+            double? xMax   = parser.TryEvaluate(textBox2.Text);
+            double? xScale = parser.TryEvaluate(textBox3.Text);
+            double? yMin   = parser.TryEvaluate(textBox4.Text);
+            double? yMax   = parser.TryEvaluate(textBox5.Text);
+            double? yScale = parser.TryEvaluate(textBox6.Text);
 
-                if (xMin >= xMax || yMin >= yMax || xScale <= 0 || yScale <= 0)
-                    MessageBox.Show("Invalid values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                {
-                    (Owner as IntegralApproximator).SetWindow(
-                        xMin,
-                        xMax,
-                        xScale,
-                        yMin,
-                        yMax,
-                        yScale,
-                        checkBox1.Checked,
-                        checkBox2.Checked);
-                    Close();
-                }
+            if (xMin.HasValue && xMax.HasValue && xScale.HasValue &&
+                yMin.HasValue && yMax.HasValue && yScale.HasValue &&
+                xMin.Value < xMax.Value && yMin.Value < yMax.Value &&
+                xScale.Value > 0 && yScale.Value > 0)
+            {
+                (Owner as IntegralApproximator).SetWindow(
+                    xMin.Value,
+                    xMax.Value,
+                    xScale.Value,
+                    yMin.Value,
+                    yMax.Value,
+                    yScale.Value,
+                    checkBox1.Checked,
+                    checkBox2.Checked);
+                Close();
             }
             else MessageBox.Show("Invalid values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
