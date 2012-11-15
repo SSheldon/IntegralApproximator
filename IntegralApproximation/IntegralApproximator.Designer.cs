@@ -73,6 +73,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button40 = new System.Windows.Forms.Button();
             this.button46 = new System.Windows.Forms.Button();
+            this.button28 = new System.Windows.Forms.Button();
             this.button45 = new System.Windows.Forms.Button();
             this.button29 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
@@ -549,6 +550,7 @@
             // 
             this.tabPage2.Controls.Add(this.button40);
             this.tabPage2.Controls.Add(this.button46);
+            this.tabPage2.Controls.Add(this.button28);
             this.tabPage2.Controls.Add(this.button45);
             this.tabPage2.Controls.Add(this.button29);
             this.tabPage2.Controls.Add(this.button44);
@@ -595,6 +597,16 @@
             this.button46.Text = "+";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.InsertKey_Click);
+            // 
+            // button28
+            // 
+            this.button28.Location = new System.Drawing.Point(6, 6);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(47, 23);
+            this.button28.TabIndex = 24;
+            this.button28.Text = "mod";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.InsertKey_Click);
             // 
             // button45
             // 
@@ -879,6 +891,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button40;
         private System.Windows.Forms.Button button46;
+        private System.Windows.Forms.Button button28;
         private System.Windows.Forms.Button button45;
         private System.Windows.Forms.Button button29;
         private System.Windows.Forms.Button button44;

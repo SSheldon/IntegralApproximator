@@ -274,7 +274,7 @@ namespace IntegralApproximation
                 case 21: return "sinh(";
                 case 22: return "cosh(";
                 case 23: return "tanh(";
-                //   24 was modulo
+                case 24: return "%";
                 case 25: return "7";
                 case 26: return "4";
                 case 27: return "1";
