@@ -1,1 +1,0 @@
-regsvr32 "%~dp0MTParserCOM.dll"
