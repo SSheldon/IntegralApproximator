@@ -93,6 +93,7 @@
             this.button47 = new System.Windows.Forms.Button();
             this.button48 = new System.Windows.Forms.Button();
             this.button49 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -796,12 +797,25 @@
             this.button49.UseVisualStyleBackColor = true;
             this.button49.Click += new System.EventHandler(this.InsertKey_Click);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(584, 552);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(211, 13);
+            this.linkLabel1.TabIndex = 48;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "github.com/SSheldon/IntegralApproximator";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // IntegralApproximator
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 566);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.domainUpDown1);
             this.Controls.Add(this.label4);
@@ -897,6 +911,7 @@
         private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button button48;
         private System.Windows.Forms.Button button49;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
