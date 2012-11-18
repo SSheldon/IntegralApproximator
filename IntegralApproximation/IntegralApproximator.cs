@@ -231,10 +231,13 @@ namespace IntegralApproximation
             if ((control is TextBox && !(control as TextBox).ReadOnly) || control is DomainUpDown)
             {
                 int index = (sender as Button).TabIndex;
-                string text = control.Text;
 
                 if (index == 29)
-                    control.Text = text.Remove(text.Length > 0 ? text.Length - 1 : 0);
+                {
+                    string text = control.Text;
+                    if (text.Length > 0)
+                        control.Text = text.Remove(text.Length - 1);
+                }
                 else if (index == 35)
                     control.Text = "";
                 else
