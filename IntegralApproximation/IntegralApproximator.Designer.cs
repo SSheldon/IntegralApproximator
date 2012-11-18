@@ -835,6 +835,7 @@
             this.Controls.Add(this.zg1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "IntegralApproximator";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Integral Approximator";
             this.Load += new System.EventHandler(this.IntegralApproximator_Load);
             this.tabControl1.ResumeLayout(false);
