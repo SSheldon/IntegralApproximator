@@ -1,3 +1,9 @@
+Integral Approximator is a Windows application, written in C# using Windows Forms,
+that graphically illustrates different integral approximation techniques, including:
+* Left, Right, and Midpoint Reimann sums
+* Trapezoidal rule
+* Simpson's rule
+
 Graphing courtesy of ZedGraph - http://sourceforge.net/projects/zedgraph/
 
 Expression parsing courtesy of Yet Another Math Parser (YAMP) -
