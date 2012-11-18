@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}" Name="Integral Approximator" Language="1033" Version="1.0.0.0"
-           Manufacturer="Steven Sheldon" UpgradeCode="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}">
+  <Product Name="Integral Approximator" Manufacturer="Steven Sheldon" UpgradeCode="{C27C20C8-4F10-4188-8E68-23BDFBB0B5E4}"
+           Language="1033" Version="1.1.0.0" Id="{9B0F59B5-F3C5-4FB1-8CDA-1B3AE582C721}">
     <Package InstallerVersion="200" Compressed="yes" />
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
     <Directory Id="TARGETDIR" Name="SourceDir">
